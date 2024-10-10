@@ -63,4 +63,33 @@ Every Block counts with 5 properties:
 
 The TxStatus enumerate class counts with 2 constants:
 * PENDING
-* VALIDATE
+* VALIDATED
+
+## Creating Accounts
+
+Creating accounts is simply generate a new random ID and the key pair public and private
+related to it and then setting it with a username for UI purposes.
+
+## Creating Miners
+
+Creating a Miner is the same process of creating an Account (see above), but specifying to create
+the account as a Miner. It's good to say that once an Account or Miner is created, there's no chance of changing
+the rol.
+
+## Grouping Transactions
+
+Every Transaction, once PENDING, is grouped with 9 transactions
+to build a Block. Then, the Block is push to the pendingBlocks map at the Miner and waits for the validation
+of the Block.
+
+When the Block is validated (more on that below) is added to the Ledger and all transactions change to VALIDATED. In the Account, every VALIDATED transaction is added to
+the lastTransactions queue.
+
+## Validating Blocks
+
+Every Block, once is full of transactions, is served to the Miner so he/she can decide
+which block validate.
+
+As it was defined int the Infrastructure section, every Block generate a hash in order to
+perform a proof-of-work over the protocol. Miners can just generate random numbers until one of
+them matches the required block hash.
